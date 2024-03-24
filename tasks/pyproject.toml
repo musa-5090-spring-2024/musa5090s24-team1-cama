@@ -1,0 +1,21 @@
+[tool.poetry]
+name = "tasks"
+version = "0.1.0"
+description = ""
+authors = ["Your Name <you@example.com>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = "^3.10"
+black = "^24.3.0"
+pre-commit = "^3.6.2"
+requests = "^2.31.0"
+jupyter = "^1.0.0"
+google-cloud = "^0.34.0"
+pretty-errors = "^1.2.25"
+poetry-plugin-export = "^1.7.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
