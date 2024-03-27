@@ -2,7 +2,7 @@
 name = "tasks"
 version = "0.1.0"
 description = ""
-authors = ["Test Name for Update <you@example.com>"]
+authors = ["Test Name for Update Again <you@example.com>"]
 readme = "README.md"
 
 [tool.poetry.dependencies]
