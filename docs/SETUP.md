@@ -11,15 +11,18 @@ Follow the instructions at https://github.com/pyenv/pyenv to install pyenv.
 ## 3. Install Poetry
 Visit https://python-poetry.org/docs/ for instructions on installing Poetry.
 
-## 4. Clone the GitHub Repository
+## 4. Install Pre-Commit
+From your root directory in your terminal, run `pipx install pre-commit`.
+
+## 5. Clone the GitHub Repository
 Clone the git repository to your local machine by running the following command in your command line interface (CLI):
 
 `git clone https://github.com/musa-5090-spring-2024/musa5090s24-team1-cama.git`
 
-## 5. Install Dependencies with Poetry
+## 6. Install Dependencies with Poetry
 In your command line interface (CLI), navigate to the `tasks` subdirectory with `cd musa5020s24-team1-cama/tasks` and then run `poetry install`.
 
-## 6. Activate the Virtual Environment
+## 7. Activate the Virtual Environment
 Activate the virtual environment by running:
 
 `poetry shell`
