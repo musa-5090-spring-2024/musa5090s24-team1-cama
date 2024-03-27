@@ -17,7 +17,7 @@ repos:
     hooks:
       - id: export-requirements
         name: Export requirements.txt
-        entry: ./export_requirements.sh
+        entry: tasks/export_requirements.sh
         language: script
-        files: ^(pyproject.toml|poetry.lock)$
+        files: ^(tasks/pyproject.toml|tasks/poetry.lock)$
         always_run: true
