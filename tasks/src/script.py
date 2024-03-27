@@ -5,3 +5,4 @@ from utils.prepare_data.prepare_opa_properties import prepare_phl_opa_properties
 
 # extract_phl_opa_properties()
 prepare_phl_opa_properties()
+
