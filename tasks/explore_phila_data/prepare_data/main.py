@@ -32,7 +32,7 @@ def prepare_phl_opa_properties(request):
     print(f'Downloaded to {raw_filename}')
 
     # Load the data from the CSV file
-    with open(raw_filename, 'r') as f:
+    with open(raw_filename, 'r', encoding='utf-8') as f:
         reader = csv.DictReader(f)
         data = list(reader)
 
