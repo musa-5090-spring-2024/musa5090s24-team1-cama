@@ -27,7 +27,7 @@ def extract_phl_opa_properties(request):
     print(f'Downloaded {filename}')
 
     # Upload the downloaded file to cloud storage
-    BUCKET_NAME = os.getenv('DATA_LAKE_BUCKET')
+    BUCKET_NAME = os.getenv('INPUT_DATA_LAKE_BUCKET')
     blobname = 'raw/phl_opa_properties/phl_opa_properties.csv'
 
     storage_client = storage.Client()
