@@ -10,7 +10,6 @@ import pyproj
 from shapely import wkt
 import functions_framework
 from google.cloud import storage
-import pretty_errors
 
 DIRNAME = pathlib.Path(__file__).parent
 
