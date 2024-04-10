@@ -9,14 +9,13 @@ from google.cloud import storage
 
 DIRNAME = pathlib.Path(__file__).parent
 
-
 @functions_framework.http
 def extract_phl_pwd_parcels(request):
     print('Extracting PWD Parcels data...')
 
-    # Download the PWD Parcels data as a CSV
-    url = 'https://opendata.arcgis.com/datasets/84baed491de44f539889f2af178ad85c_0.csv'
-    filename = DIRNAME / 'phl_pwd_parcels.csv'
+    # Download the PWD Parcels data as GeoJSON
+    url = 'https://opendata.arcgis.com/datasets/7e4c7735e58b4e128540ffdb86f02ebe_0.geojson'
+    filename = DIRNAME / 'phl_pwd_parcels.geojson'
 
     response = requests.get(url)
     response.raise_for_status()
@@ -28,7 +27,7 @@ def extract_phl_pwd_parcels(request):
 
     # Upload the downloaded file to cloud storage
     BUCKET_NAME = os.getenv('INPUT_DATA_LAKE_BUCKET')
-    blobname = 'raw/phl_pwd_parcels/phl_pwd_parcels.csv'
+    blobname = 'raw/phl_pwd_parcels/phl_pwd_parcels.geojson'
 
     storage_client = storage.Client()
     bucket = storage_client.bucket(BUCKET_NAME)
