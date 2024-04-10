@@ -15,8 +15,8 @@ def extract_phl_opa_properties(request):
     print('Extracting OPA Properties data...')
 
     # Download the OPA Properties data as a CSV
-    url = 'https://opendata-downloads.s3.amazonaws.com/opa_properties_public.csv'
-    filename = DIRNAME / 'phl_opa_properties.csv'
+    url = 'https://phl.carto.com/api/v2/sql?filename=opa_properties_public&format=geojson&skipfields=cartodb_id&q=SELECT+*+FROM+opa_properties_public'
+    filename = DIRNAME / 'opa_properties_public.geojson'
 
     response = requests.get(url)
     response.raise_for_status()

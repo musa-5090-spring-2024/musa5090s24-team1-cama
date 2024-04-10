@@ -35,6 +35,12 @@ def load_opa_assessments(request):
         bigquery.SchemaField("parcel_number", "STRING"),
         bigquery.SchemaField("owner_name", "STRING"),
         bigquery.SchemaField("property_address", "STRING"),
+        bigquery.SchemaField("exempt_building", "STRING"),
+        bigquery.SchemaField("exempt_land", "STRING"),
+        bigquery.SchemaField("market_value", "STRING"),
+        bigquery.SchemaField("taxable_building", "STRING"),
+        bigquery.SchemaField("taxable_land", "STRING"),
+        bigquery.SchemaField("year", "STRING"),
         # Add more fields here based on your JSONL file structure
     ]
 
