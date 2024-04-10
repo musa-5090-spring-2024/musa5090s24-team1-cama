@@ -30,12 +30,30 @@ def load_pwd_parcels(request):
     client = bigquery.Client(project=project_id)
 
     # Define the external table's schema
-    # Adjust according to your JSONL structure
     schema = [
-        bigquery.SchemaField("parcelid", "STRING"),
-        bigquery.SchemaField("owner1", "STRING"),
-        bigquery.SchemaField("address", "STRING"),
-        # Add more fields here based on your JSONL file structure
+        bigquery.SchemaField("OBJECTID", "STRING"),
+        bigquery.SchemaField("PARCELID", "STRING"),
+        bigquery.SchemaField("TENCODE", "STRING"),
+        bigquery.SchemaField("ADDRESS", "STRING"),
+        bigquery.SchemaField("OWNER1", "STRING"),
+        bigquery.SchemaField("OWNER2", "STRING", mode="NULLABLE"),  # Assuming OWNER2 can be null
+        bigquery.SchemaField("BLDG_DESC", "STRING"),
+        bigquery.SchemaField("IMPERV_AREA", "INTEGER"),
+        bigquery.SchemaField("BC_LANDUSE", "STRING"),
+        bigquery.SchemaField("BC_TYPE", "STRING"),
+        bigquery.SchemaField("IMP_ROOF", "FLOAT"),
+        bigquery.SchemaField("IMP_GROUND", "FLOAT"),
+        bigquery.SchemaField("IMP_TOTAL", "FLOAT"),
+        bigquery.SchemaField("NATURAL_GROUND", "FLOAT"),
+        bigquery.SchemaField("TOTAL_GROUND", "FLOAT"),
+        bigquery.SchemaField("COUNCIL_DISTRICT", "STRING"),
+        bigquery.SchemaField("PCPC_DISTRICT", "STRING"),
+        bigquery.SchemaField("PUBLIC_PRIVATE", "STRING"),
+        bigquery.SchemaField("PROGRAM", "STRING"),
+        bigquery.SchemaField("OWNER_CATEGORY", "STRING"),
+        bigquery.SchemaField("Shape__Area", "FLOAT"),
+        bigquery.SchemaField("Shape__Length", "FLOAT"),
+        bigquery.SchemaField("geometry", "GEOGRAPHY"),
     ]
 
     # Define external table configuration
@@ -60,7 +78,7 @@ def load_pwd_parcels(request):
     print(internal_table_id)
     sql = f"""
     CREATE OR REPLACE TABLE `{internal_table_id}` AS
-    SELECT *, parcelid AS property_id
+    SELECT *
     FROM `{external_table_id}`
     """
 

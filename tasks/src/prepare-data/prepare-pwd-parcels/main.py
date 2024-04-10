@@ -4,7 +4,6 @@ load_dotenv()
 import json
 import os
 import pathlib
-
 import logging
 import pyproj
 from shapely.geometry import shape, mapping
@@ -19,11 +18,9 @@ def prepare_phl_pwd_parcels(request):
     print('Preparing PWD Parcels data...')
 
     raw_filename = DIRNAME / 'phl_pwd_parcels.geojson'
-    # Change the output file extension to .jsonl
     prepared_filename = DIRNAME / 'phl_pwd_parcels.jsonl'
 
     raw_blobname = 'raw/phl_pwd_parcels/phl_pwd_parcels.geojson'
-    # Reflect the change in file extension in the blob name as well
     prepared_blobname = 'tables/phl_pwd_parcels/phl_pwd_parcels.jsonl'
 
     bucket_name = os.getenv('INPUT_DATA_LAKE_BUCKET')
@@ -43,23 +40,24 @@ def prepare_phl_pwd_parcels(request):
 
     transformer = pyproj.Transformer.from_crs("epsg:2272", "epsg:4326", always_xy=True)
 
-    def process_data(geojson_data, prepared_filename):
-        # Open the output file for writing
-        with open(prepared_filename, 'w') as f:
-            for feature in geojson_data['features']:
-                geom = shape(feature['geometry'])
-                # Apply transformation directly to the Shapely geometry
-                transformed_geom = transform(transformer.transform, geom)
-                feature['geometry'] = mapping(transformed_geom)
-                # Write each transformed feature as a separate line in JSONL format
-                f.write(json.dumps(feature) + '\n')
+    with open(prepared_filename, 'w') as f:
+        for feature in geojson_data['features']:
+            # Start with a copy of the properties
+            output_feature = feature['properties']
+            
+            geom = shape(feature['geometry'])
+            # Apply transformation directly to the Shapely geometry
+            transformed_geom = transform(transformer.transform, geom)
+            # Convert the transformed geometry to a GeoJSON format and add it to the output feature
+            output_feature['geometry'] = mapping(transformed_geom)
+            
+            # Write the flattened feature as a separate line in the JSONL file
+            f.write(json.dumps(output_feature) + '\n')
 
-        logging.info(f'Processed data into {prepared_filename}')
-
-    process_data(geojson_data, prepared_filename)
+    logging.info(f'Processed data into {prepared_filename}')
 
     blob = output_bucket.blob(prepared_blobname)
     blob.upload_from_filename(prepared_filename)
     print(f'Uploaded to {prepared_blobname} in {output_bucket_name}')
 
-    return f'Processed data into {prepared_filename} and uploaded to gs://{output_bucket_name}/{prepared_blobname}'
+    return (f'Processed data into {prepared_filename} and uploaded to gs://{output_bucket_name}/{prepared_blobname}', 200)
