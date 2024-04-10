@@ -9,3 +9,7 @@ prepared_data/*
 # Connection credentials
 keys/
 .env
+
+# data
+*.geojson
+*.jsonl
