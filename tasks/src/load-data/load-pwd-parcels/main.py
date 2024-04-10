@@ -32,9 +32,9 @@ def load_pwd_parcels(request):
     # Define the external table's schema
     # Adjust according to your JSONL structure
     schema = [
-        bigquery.SchemaField("parcel_number", "STRING"),
-        bigquery.SchemaField("owner_name", "STRING"),
-        bigquery.SchemaField("property_address", "STRING"),
+        bigquery.SchemaField("parcelid", "STRING"),
+        bigquery.SchemaField("owner1", "STRING"),
+        bigquery.SchemaField("address", "STRING"),
         # Add more fields here based on your JSONL file structure
     ]
 
@@ -60,7 +60,7 @@ def load_pwd_parcels(request):
     print(internal_table_id)
     sql = f"""
     CREATE OR REPLACE TABLE `{internal_table_id}` AS
-    SELECT *, parcel_number AS property_id
+    SELECT *, parcelid AS property_id
     FROM `{external_table_id}`
     """
 
