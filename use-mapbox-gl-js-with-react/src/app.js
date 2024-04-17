@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import mapboxgl from 'mapbox-gl';
 
 mapboxgl.accessToken = "pk.eyJ1IjoiY3J1c2VtLTIwMjQiLCJhIjoiY2x1dTBpNm1pMDR3ODJpcGZlbDhpODV0ZyJ9.WYCf3bI56S7DW6LKib_O4w";
 
@@ -25,3 +26,5 @@ export default function App() {
       </div>
     );
   }
+
+  
