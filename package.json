@@ -1,3 +1,5 @@
 {
-  "dependencies": {}
+  "dependencies": {
+    "mapbox-gl": "^3.3.0"
+  }
 }
