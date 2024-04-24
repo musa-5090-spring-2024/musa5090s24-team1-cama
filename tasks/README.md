@@ -2,14 +2,6 @@
 
 This subdirectory in the monorepo uses Python to ETL data and load it to Google Cloud for visualization in the UI. Setup instructions are in [the `SETUP.md`](/docs/SETUP.md). Further info is below.
 
-## Running `script.py`
-Assuming you have already walked through the [setup instructions](/docs/SETUP.md), running the ETL script is simple. Everything is run through `script.py` in the `src` subdirectory. To run the full script, simply run the following in your command line:
-
-```
-poetry shell
-python tasks/src/script.py
-```
-
 ## Adding Packages
 This subdirectory uses `poetry` for package management. If you need to add a package, you can do this by running `poetry add [package name]`. There is a pre-commit hook set up to automatically add new packages to the `requirements.txt` file when you push to GitHub.
 
