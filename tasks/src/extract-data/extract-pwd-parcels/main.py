@@ -14,7 +14,7 @@ def extract_phl_pwd_parcels(request):
     print('Extracting PWD Parcels data...')
 
     # Download the PWD Parcels data as GeoJSON
-    url = 'https://opendata.arcgis.com/datasets/7e4c7735e58b4e128540ffdb86f02ebe_0.geojson'
+    url = 'https://opendata.arcgis.com/datasets/84baed491de44f539889f2af178ad85c_0.geojson'
     filename = DIRNAME / 'phl_pwd_parcels.geojson'
 
     response = requests.get(url)
