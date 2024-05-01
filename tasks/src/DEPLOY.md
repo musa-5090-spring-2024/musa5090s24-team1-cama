@@ -74,73 +74,7 @@ First, in your root directory, make sure your default Google Cloud project is se
 
 Next, navigate to the `tasks/src` directory in this repository.
 
-#### PWD Parcels
-
-To create the extract PWD Parcels task, navigate to `extract-data/extract-pwd_parcels` and run the following command:
-
-```shell
-gcloud functions deploy extract_phl_pwd_parcels \
---gen2 \
---region=us-central1 \
---runtime=python312 \
---source=. \
---entry-point=extract_phl_pwd_parcels \
---service-account=musa509s24-team1@appspot.gserviceaccount.com \
---memory=4Gi \
---timeout=240s \
---set-env-vars=DATA_LAKE_BUCKET=musa5090s24_team1_raw_data \
---trigger-http \
---no-allow-unauthenticated \
---project musa509s24-team1
-```
-
-To create the prepare PWD parcels task, navigate to `prepare-data/prepare-pwd-parcels` and run the following command:
-
-```shell
-gcloud functions deploy prepare_phl_pwd_parcels \
---gen2 \
---region=us-central1 \
---runtime=python312 \
---source=. \
---entry-point=prepare_phl_pwd_parcels \
---service-account=musa509s24-team1@appspot.gserviceaccount.com \
---memory=8Gi \
---timeout=480s \
---set-env-vars=INPUT_DATA_LAKE_BUCKET='musa5090s24_team1_raw_data',OUTPUT_DATA_LAKE_BUCKET='musa5090s24_team1_prepared_data' \
---trigger-http \
---no-allow-unauthenticated \
---project musa509s24-team1
-```
-
-
-To create the load PWD parcels task, navigate to `load-data/load-pwd-parcels` and run the following command:
-
-```shell
-gcloud functions deploy load_pwd_parcels \
---gen2 \
---region=us-central1 \
---runtime=python312 \
---source=. \
---entry-point=load_pwd_parcels \
---service-account=musa509s24-team1@appspot.gserviceaccount.com \
---memory=8Gi \
---timeout=480s \
---trigger-http \
---no-allow-unauthenticated \
---project musa509s24-team1
-```
-
-To deploy the PWD pipeline, run:
-```shell
-gcloud workflows deploy phl-pwd-parcels-pipeline \
---source=phl-pwd-parcels-pipeline.yaml \
---service-account='musa509s24-team1@appspot.gserviceaccount.com'
-```
-
-
-#### OPA Properties
-
-To create the extract OPA properties task, navigate to `extract-data/extract-opa-properties` and run the following command:
+To create the extract OPA properties task, run the following command:
 
 ```shell
 gcloud functions deploy extract_phl_opa_properties \
@@ -158,7 +92,7 @@ gcloud functions deploy extract_phl_opa_properties \
 --project musa509s24-team1
 ```
 
-To create the prepare OPA properties task, navigate to `prepare-data/prepare-opa-properties`run the following command:
+To create the prepare OPA properties task, run the following command:
 
 ```shell
 gcloud functions deploy prepare_phl_opa_properties \
@@ -171,6 +105,21 @@ gcloud functions deploy prepare_phl_opa_properties \
 --memory=8Gi \
 --timeout=480s \
 --set-env-vars=INPUT_DATA_LAKE_BUCKET='musa5090s24_team1_raw_data',OUTPUT_DATA_LAKE_BUCKET='musa5090s24_team1_prepared_data' \
+--trigger-http \
+--no-allow-unauthenticated \
+--project musa509s24-team1
+```
+
+```shell
+gcloud functions deploy load_opa_properties \
+--gen2 \
+--region=us-central1 \
+--runtime=python312 \
+--source=. \
+--entry-point=load_opa_properties \
+--service-account=musa509s24-team1@appspot.gserviceaccount.com \
+--memory=4Gi \
+--timeout=240s \
 --trigger-http \
 --no-allow-unauthenticated \
 --project musa509s24-team1

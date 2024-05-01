@@ -15,7 +15,7 @@ def load_opa_properties(request):
     print('Loading OPA Properties data...')
 
     # Initialize BigQuery client
-    client = bigquery.Client()
+    client = bigquery.Client(project=project_id)
 
 # Environment and configuration setup
     project_id = os.getenv('GOOGLE_CLOUD_PROJECT')
@@ -25,9 +25,6 @@ def load_opa_properties(request):
     external_table_uri = f'gs://musa5090s24_team1_prepared_data/tables/phl_opa_properties/phl_opa_properties.jsonl'
 
     print(external_table_uri)
-
-    # Initialize BigQuery client
-    client = bigquery.Client(project=project_id)
 
     # Define the external table's schema
     # Adjust according to your JSONL structure
