@@ -55,7 +55,7 @@ def prepare_phl_opa_properties(request):
                 # Write each transformed feature as a separate line in JSONL format
                 f.write(json.dumps(feature) + '\n')
 
-     logging.info(f'Processed data into {prepared_filename}')
+    logging.info(f'Processed data into {prepared_filename}')
 
     blob = output_bucket.blob(prepared_blobname)
     blob.upload_from_filename(prepared_filename)
