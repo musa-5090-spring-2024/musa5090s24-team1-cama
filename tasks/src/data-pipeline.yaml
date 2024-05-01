@@ -1,0 +1,84 @@
+main:
+  params: [input]
+  steps:
+    - extractData:
+        parallel:
+          branches:
+            - extractPhlAssessments:
+                steps:
+                  - callAssessments:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/extract_phl_assessments'
+                          auth:
+                              type: OIDC
+            - extractPhlOpaProperties:
+                steps:
+                  - callOpaProperties:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/extract_phl_opa_properties'
+                          auth:
+                              type: OIDC
+            - extractPhlPwdParcels:
+                steps:
+                  - callPwdParcels:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/extract_phl_pwd_parcels'
+                          auth:
+                              type: OIDC
+    - prepareData:
+        parallel:
+          branches:
+            - preparePhlAssessments:
+                steps:
+                  - callPrepareAssessments:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/prepare_phl_opa_assessments'
+                          auth:
+                              type: OIDC
+            - preparePhlOpaProperties:
+                steps:
+                  - callPrepareOpaProperties:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/prepare_phl_opa_properties'
+                          auth:
+                              type: OIDC
+            - preparePhlPwdParcels:
+                steps:
+                  - callPreparePwdParcels:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/prepare_phl_pwd_parcels'
+                          auth:
+                              type: OIDC
+    - loadData:
+        parallel:
+          branches:
+            - loadOpaAssessments:
+                steps:
+                  - callLoadAssessments:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/load_opa_assessments'
+                          auth:
+                              type: OIDC
+            - loadOpaProperties:
+                steps:
+                  - callLoadProperties:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/load_opa_properties'
+                          auth:
+                              type: OIDC
+            - loadPwdParcels:
+                steps:
+                  - callLoadPwdParcels:
+                      call: http.post
+                      args:
+                          url: 'https://us-central1-musa-344004.cloudfunctions.net/load_pwd_parcels'
+                          auth:
+                              type: OIDC

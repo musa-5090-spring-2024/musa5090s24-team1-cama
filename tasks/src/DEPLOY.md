@@ -74,6 +74,56 @@ First, in your root directory, make sure your default Google Cloud project is se
 
 Next, navigate to the `tasks/src` directory in this repository.
 
+### OPA Assessments
+
+```shell
+gcloud functions deploy extract_phl_assessments \
+--gen2 \
+--region=us-central1 \
+--runtime=python312 \
+--source=. \
+--entry-point=extract_phl_opa_assessments \
+--service-account=musa509s24-team1@appspot.gserviceaccount.com \
+--memory=4Gi \
+--timeout=240s \
+--set-env-vars=INPUT_DATA_LAKE_BUCKET=musa5090s24_team1_raw_data \
+--trigger-http \
+--no-allow-unauthenticated \
+--project musa509s24-team1
+```
+
+```shell
+gcloud functions deploy prepare_phl_opa_assessments \
+--gen2 \
+--region=us-central1 \
+--runtime=python312 \
+--source=. \
+--entry-point=prepare_phl_opa_assessments \
+--service-account=musa509s24-team1@appspot.gserviceaccount.com \
+--memory=8Gi \
+--timeout=480s \
+--set-env-vars=INPUT_DATA_LAKE_BUCKET='musa5090s24_team1_raw_data',OUTPUT_DATA_LAKE_BUCKET='musa5090s24_team1_prepared_data' \
+--trigger-http \
+--no-allow-unauthenticated \
+--project musa509s24-team1
+```
+
+```shell
+gcloud functions deploy load_opa_assessments \
+--gen2 \
+--region=us-central1 \
+--runtime=python312 \
+--source=. \
+--entry-point=load_opa_assessments \
+--service-account=musa509s24-team1@appspot.gserviceaccount.com \
+--memory=4Gi \
+--timeout=240s \
+--trigger-http \
+--no-allow-unauthenticated \
+--project musa509s24-team1
+```
+
+### OPA Properties
 To create the extract OPA properties task, run the following command:
 
 ```shell
@@ -125,23 +175,27 @@ gcloud functions deploy load_opa_properties \
 --project musa509s24-team1
 ```
 
+### PWD Parcels
+
+### Deploy Pipeline
 To deploy the pipeline workflow, run the following command:
 
 ```shell
-gcloud workflows deploy phl-property-data-pipeline \
---region=us-central1 \
---source=phl-property-data-pipeline.yaml \
+gcloud workflows deploy data-pipeline \
+--location=us-central1 \
+--source=data-pipeline.yaml \
 --service-account='musa509s24-team1@appspot.gserviceaccount.com'
 ```
 
+### Create Scheduler
 Finally, to create a scheduler to run the workflow on a weekly basis, run the following command:
 
 ```shell
-gcloud scheduler jobs create http phl-property-data-pipeline \
+gcloud scheduler jobs create http data-pipeline \
 --schedule='0 0 * * 1' \
 --time-zone='America/New_York' \
 --location='us-central1' \
---uri='https://workflowexecutions.googleapis.com/v1/projects/musa-344004/locations/us-central1/workflows/phl-property-data-pipeline/executions' \
+--uri='https://workflowexecutions.googleapis.com/v1/projects/musa-344004/locations/us-central1/workflows/data-pipeline/executions' \
 --oidc-service-account-email='musa509s24-team1@appspot.gserviceaccount.com' \
---oidc-token-audience='https://workflowexecutions.googleapis.com/v1/projects/musa-344004/locations/us-central1/workflows/phl-property-data-pipeline/executions'
+--oidc-token-audience='https://workflowexecutions.googleapis.com/v1/projects/musa-344004/locations/us-central1/workflows/data-pipeline/executions'
 ```
